@@ -12,34 +12,5 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </FrameLayout>
-
-    <TextView
-        android:id="@+id/TextView_Menu"
-        android:layout_width="273dp"
-        android:layout_height="283dp"
-        android:layout_marginBottom="70dp"
-        android:layout_marginEnd="55dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="29dp"
-        android:text=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque tempus diam non ultrices. Maecenas et lectus dui. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec ultricies pellentesque arcu, eget ultricies ante faucibus sed. Nulla semper lacus ex, et dignissim dui suscipit eget. Mauris pharetra elit vitae nisl faucibus, ac aliquam risus tincidunt. Nulla augue lectus, dictum vel neque sed, condimentum faucibus eros."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainIcon" />
-
-    <ImageView
-        android:id="@+id/MainIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
-        android:layout_marginEnd="156dp"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="57dp"
-        app:layout_constraintBottom_toTopOf="@+id/TextView_Menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_round" />
 </android.support.constraint.ConstraintLayout>
