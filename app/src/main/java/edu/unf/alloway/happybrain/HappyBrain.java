@@ -95,7 +95,10 @@ public class HappyBrain extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.nav_achievements) { //Takes you to the achievements
-
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame,
+                            new AchievementsFragment())
+                    .commit();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

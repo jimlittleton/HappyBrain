@@ -3,4 +3,5 @@
     <color name="colorPrimary">#FF6F00</color>
     <color name="colorPrimaryDark">#C43E00</color>
     <color name="colorAccent">#80CCC4</color>
+    <color name="achievementLocked">#C1C1C1</color>
 </resources>

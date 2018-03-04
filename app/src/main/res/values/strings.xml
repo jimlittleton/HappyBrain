@@ -26,4 +26,8 @@
     <string name="Archive">Archive</string>
     <string name="Achievements">Achievements</string>
 
+    <!--Text for displaying achievements-->
+    <string name="achievement_unlock_points">Points to unlock: %d</string>
+    <!---->
+
 </resources>
