@@ -9,11 +9,7 @@
         enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
     </string>
 
-    <string name="place_holder_link">
-        <a href="https://www.unf.edu/">
-            DUMMY LINK
-        </a>
-    </string>
+    <string name="place_holder_link">Read the study \n%s</string>
     <string name="title_activity_happy_brain">Happy Brain</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -30,4 +26,7 @@
     <string name="achievement_unlock_points">Points to unlock: %d</string>
     <!---->
 
+    <!--Keys for preferences pertaining to storing the mobileId-->
+    <string name="pref_credential">credential_pref</string>
+    <string name="pref_mobile_id">mobile_id</string>
 </resources>

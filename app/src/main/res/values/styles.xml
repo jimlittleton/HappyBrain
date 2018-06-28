@@ -16,6 +16,7 @@
     <style name="StandardText">
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:layout_gravity">fill</item>
     </style>
 
     <style name="Bullet">
