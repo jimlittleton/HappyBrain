@@ -1,117 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:scrollbars="none"
-    tools:ignore="HardcodedText">
+    android:id="@+id/post_root">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
-        <ImageView
-            android:id="@+id/post_image"
-            android:layout_width="match_parent"
-            android:layout_height="175dp"
-            android:src="@color/colorPrimaryDark" />
-
-        <TextView
-            style="@style/Header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="How" />
-
-        <TableLayout
+        <LinearLayout
+            android:id="@+id/post_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:orientation="vertical">
 
-            <TableRow android:id="@+id/table_row_one">
+            <ImageView
+                android:id="@+id/post_image"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:src="@color/colorPrimaryDark" />
 
-                <TextView
-                    style="@style/Bullet"
-                    android:layout_width="wrap_content"
+            <TextView
+                style="@style/Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/header_how" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <TableRow android:id="@+id/table_row_one">
+
+                    <TextView
+                        style="@style/Bullet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/bullet" />
+
+                    <TextView
+                        android:id="@+id/bullet_point_one"
+                        style="@style/StandardText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="10"
+                        tools:text="Dummy text" />
+                </TableRow>
+
+                <TableRow android:id="@+id/table_row_two">
+
+                    <TextView
+                        style="@style/Bullet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/bullet" />
+
+                    <TextView
+                        android:id="@+id/bullet_point_two"
+                        style="@style/StandardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="10"
+                        tools:text="Dummy text" />
+
+                </TableRow>
+
+                <TableRow android:id="@+id/table_row_three">
+
+                    <TextView
+                        style="@style/Bullet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/bullet" />
+
+                    <TextView
+                        android:id="@+id/bullet_point_three"
+                        style="@style/StandardText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="10"
+                        tools:text="Dummy text" />
+
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                style="@style/Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/header_why" />
+
+            <TextView
+                android:id="@+id/why_message"
+                style="@style/StandardText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:autoLink="web"
+                tools:text="@string/place_holder_text" />
+
+            <TextView
+                android:id="@+id/read_the_study_header"
+                style="@style/Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/header_read_the_study" />
+
+            <TextView
+                android:id="@+id/web_link"
+                style="@style/WebLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:autoLink="web"
+                tools:text="This is a place holder link" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/et_reflect_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:hint="@string/type_reflection_hint"
+                tools:visibility="visible"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/et_reflect"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/bullet" />
+                    android:inputType="textMultiLine"
+                    tools:ignore="LabelFor" />
+            </android.support.design.widget.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/bullet_point_one"
-                    style="@style/StandardText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="10"
-                    android:text="Dummy text" />
-            </TableRow>
+            <Button
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:id="@+id/bt_submit_reflection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/bt_submit_reflection"
+                android:textColor="#FFF" />
+        </LinearLayout>
 
-            <TableRow android:id="@+id/table_row_two">
 
-                <TextView
-                    style="@style/Bullet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/bullet" />
+    </ScrollView>
 
-                <TextView
-                    android:id="@+id/bullet_point_two"
-                    style="@style/StandardText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="10"
-                    android:text="Dummy text" />
+    <ProgressBar
+        android:id="@+id/post_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/colorPrimary"
+        android:visibility="invisible"
+        tools:visibility="visible" />
 
-            </TableRow>
+    <TextView
+        android:id="@+id/tv_error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        tools:text="Error message"
+        tools:visibility="visible" />
 
-            <TableRow android:id="@+id/table_row_three">
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_share_white_24dp"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal" />
 
-                <TextView
-                    style="@style/Bullet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/bullet" />
-
-                <TextView
-                    android:id="@+id/bullet_point_three"
-                    style="@style/StandardText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="10"
-                    android:text="Dummy text" />
-
-            </TableRow>
-        </TableLayout>
-
-        <TextView
-            style="@style/Header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Why" />
-
-        <TextView
-            android:id="@+id/why_message"
-            style="@style/StandardText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:autoLink="web"
-            android:text="@string/place_holder_text" />
-
-        <TextView
-            android:id="@+id/web_link"
-            style="@style/WebLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:autoLink="web"
-            android:text="@string/place_holder_link" />
-    </LinearLayout>
-
-</ScrollView>
+</RelativeLayout>
