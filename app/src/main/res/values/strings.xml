@@ -9,6 +9,15 @@
         enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
     </string>
 
+    <string name="home_screen_text">
+        HAPPYBRAIN \u00A9 is our way of sharing psychological research so that we can better
+        manage life’s stresses. We often can’t change our experience, but we can change our response to it.
+        When we are able to choose, we are generally happier with the decision. In our research, we
+        found that autonomy – the desire to be self-directed -  was an important factor in determining
+        how optimistic we felt. You can develop your sense of Autonomy by thinking about why you make the
+        choices you do so that you can stay connected with the reason behind your choices.
+    </string>
+
     <string name="title_activity_happy_brain">Happy Brain</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
