@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import edu.unf.alloway.happybrain.fragment.AchievementsFragment;
+
 /**
  * RecyclerView adapter used in {@link AchievementsFragment}.
  * View {@link R.layout#list_achievements} to see how an

@@ -1,4 +1,4 @@
-package edu.unf.alloway.happybrain;
+package edu.unf.alloway.happybrain.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import edu.unf.alloway.happybrain.R;
+
 /**
  * Created by rojas on 2/27/2018.
  */
 
-public class Home extends Fragment {
+public class HomeFragment extends Fragment {
 
     View theView;
     @Nullable

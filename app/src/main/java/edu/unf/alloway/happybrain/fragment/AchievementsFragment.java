@@ -1,4 +1,4 @@
-package edu.unf.alloway.happybrain;
+package edu.unf.alloway.happybrain.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import edu.unf.alloway.happybrain.Achievement;
+import edu.unf.alloway.happybrain.AchievementAdapter;
+import edu.unf.alloway.happybrain.R;
 
 /**
  * Created by CamTheHam on 3/3/2018

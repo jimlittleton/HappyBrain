@@ -2,9 +2,6 @@ package edu.unf.alloway.happybrain;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,7 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class HappyBrain extends AppCompatActivity
+import edu.unf.alloway.happybrain.fragment.AchievementsFragment;
+import edu.unf.alloway.happybrain.fragment.HomeFragment;
+import edu.unf.alloway.happybrain.fragment.PostFragment;
+import edu.unf.alloway.happybrain.utils.NotificationServiceUtils;
+
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -37,8 +39,9 @@ public class HappyBrain extends AppCompatActivity
 
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame,
-                new Home())
+                new HomeFragment())
                     .commit();
+        NotificationServiceUtils.initRepeatingNotification(this);
     }
 
     @Override
@@ -83,13 +86,13 @@ public class HappyBrain extends AppCompatActivity
         if (id == R.id.nav_home) { //Takes you back to the home screen
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame,
-                            new Home())
+                            new HomeFragment())
                     .commit();
 
         } else if (id == R.id.nav_archive) { //Takes you to the archive
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame,
-                            new Post())
+                            new PostFragment())
                     .commit();
 
         } else if (id == R.id.nav_achievements) { //Takes you to the achievements

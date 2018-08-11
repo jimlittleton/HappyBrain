@@ -1,4 +1,4 @@
-package edu.unf.alloway.utils;
+package edu.unf.alloway.happybrain.utils;
 
 import android.text.TextUtils;
 import android.util.Log;

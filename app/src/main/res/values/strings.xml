@@ -47,4 +47,6 @@
     <string name="type_reflection_hint">Type your reflection here</string>
     <string name="bt_submit_reflection">Submit reflection</string>
     <string name="header_read_the_study">Read the study</string>
+    <string name="notif_channel_id">HappyBrainNotifications</string>
+    <string name="notif_content_text">Have you checked in today?</string>
 </resources>

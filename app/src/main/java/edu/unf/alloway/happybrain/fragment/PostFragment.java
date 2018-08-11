@@ -1,4 +1,4 @@
-package edu.unf.alloway.happybrain;
+package edu.unf.alloway.happybrain.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
@@ -30,15 +30,17 @@ import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import edu.unf.alloway.utils.NetworkUtils;
+import edu.unf.alloway.happybrain.JsonConstants;
+import edu.unf.alloway.happybrain.R;
+import edu.unf.alloway.happybrain.utils.NetworkUtils;
 
 /**
  * Created by rojas on 2/27/2018.
  */
 
-public class Post extends Fragment {
+public class PostFragment extends Fragment {
 
-    private final String TAG = Post.class.getSimpleName();
+    private final String TAG = PostFragment.class.getSimpleName();
     private SharedPreferences mobileIdPref;
     private String mobileId;
 
@@ -59,7 +61,6 @@ public class Post extends Fragment {
     @BindView(R.id.et_reflect) EditText etReflect;
     @BindView(R.id.bt_submit_reflection) Button btSubmitReflection;
     @BindView(R.id.post_root) RelativeLayout root;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
