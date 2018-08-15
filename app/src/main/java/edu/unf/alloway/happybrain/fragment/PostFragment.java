@@ -13,17 +13,19 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,10 +38,10 @@ import edu.unf.alloway.happybrain.utils.NetworkUtils;
  */
 
 public class PostFragment extends Fragment {
-
     private SharedPreferences mobileIdPref;
     private String mobileId;
 
+    @BindView(R.id.post_image) ImageView ivPageImage;
     @BindView(R.id.read_the_study_header) TextView readStudyHeader;
     @BindView(R.id.bullet_point_one) TextView tvPointOne;
     @BindView(R.id.bullet_point_two) TextView tvPointTwo;
@@ -73,11 +75,7 @@ public class PostFragment extends Fragment {
         if (mobileId == null) getMobileIdFromServer();
         else loadPageFromServer();
 
-        // We need to hide the main post view and show the progress bar
-        // while the content loads to make sure the user knows a load
-        // is in progress
         layoutContainer.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
         btSubmitReflection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +96,22 @@ public class PostFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private void getMobileIdFromServer() {
         new AsyncTask<Void, Void, String>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressBar.setVisibility(View.VISIBLE);
+                if (!NetworkUtils.hasInternetConnection(getActivity())) {
+                    cancel(true);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    showConnectionSnackbar(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getMobileIdFromServer();
+                        }
+                    });
+                }
+            }
 
             @Override
             protected String doInBackground(Void... voids) {
@@ -124,6 +138,22 @@ public class PostFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private void loadPageFromServer() {
         new AsyncTask<Void, Void, String>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressBar.setVisibility(View.VISIBLE);
+                if (!NetworkUtils.hasInternetConnection(getActivity())) {
+                    cancel(true);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    showConnectionSnackbar(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            loadPageFromServer();
+                        }
+                    });
+                }
+            }
 
             @Override
             protected String doInBackground(Void... voids) {
@@ -186,6 +216,7 @@ public class PostFragment extends Fragment {
      * @param page The {@link Page} object to extract the data from
      */
     private void populateViews(final Page page) {
+        Picasso.get().load(page.getImageUrl()).into(ivPageImage);
         // Before we set the text views, we have to check if there
         // is actually a bullet point to show
         if (!TextUtils.isEmpty(page.getFirstBullet())) tvPointOne.setText(page.getFirstBullet());
@@ -254,5 +285,17 @@ public class PostFragment extends Fragment {
                 tvError.setText(getString(R.string.ERROR_HBA00004));
                 break;
         }
+    }
+
+    /**
+     * Shows a SnackBar with the text "No internet connection"
+     * @param listener The action to be performed when the RETRY
+     *                 button is clicked.
+     * */
+    private void showConnectionSnackbar(View.OnClickListener listener) {
+        View rootView = getActivity().findViewById(R.id.main_activity_root);
+        Snackbar.make(rootView, R.string.error_no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.snackbar_action_retry, listener)
+                .show();
     }
 }

@@ -49,4 +49,6 @@
     <string name="header_read_the_study">Read the study</string>
     <string name="notif_channel_id">HappyBrainNotifications</string>
     <string name="notif_content_text">Have you checked in today?</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="snackbar_action_retry">RETRY</string>
 </resources>

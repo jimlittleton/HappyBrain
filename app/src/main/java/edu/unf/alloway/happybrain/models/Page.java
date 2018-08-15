@@ -3,6 +3,8 @@ package edu.unf.alloway.happybrain.models;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
+import edu.unf.alloway.happybrain.utils.NetworkUtils;
+
 /**
  * Uses {@link com.google.gson.Gson} to map the JSON result returned
  * from the server into a Page object
@@ -61,7 +63,7 @@ public class Page {
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return String.format("https://%s/images/%s", NetworkUtils.BASE_SERVER_URL, imageUrl);
     }
 
     public static Page fromJson(String json) {

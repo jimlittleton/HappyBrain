@@ -1,5 +1,8 @@
 package edu.unf.alloway.happybrain.utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -17,13 +20,13 @@ public final class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
     /**
-     * The base URL for the Happy Brain website
-     */
-    private static final String BASE_SERVER_URL = "happybrainapp.com";
-    /**
      * Server key used to make requests
      */
     private static final String SERVER_SECRET_KEY = "ADD KEY HERE";
+    /**
+     * The base URL for the Happy Brain website
+     */
+    public static final String BASE_SERVER_URL = "happybrainapp.com";
     /**
      * The URL used to add a new mobile device to the server.
      * Requesting this URL returns a random String that can be
@@ -157,5 +160,14 @@ public final class NetworkUtils {
                 SERVER_SECRET_KEY,
                 mobileId,
                 comment);
+    }
+
+    public static boolean hasInternetConnection(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (manager != null) {
+            networkInfo = manager.getActiveNetworkInfo();
+        }
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 }
