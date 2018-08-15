@@ -25,13 +25,10 @@ import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import edu.unf.alloway.happybrain.JsonConstants;
 import edu.unf.alloway.happybrain.R;
+import edu.unf.alloway.happybrain.models.Page;
 import edu.unf.alloway.happybrain.utils.NetworkUtils;
 
 /**
@@ -40,7 +37,6 @@ import edu.unf.alloway.happybrain.utils.NetworkUtils;
 
 public class PostFragment extends Fragment {
 
-    private final String TAG = PostFragment.class.getSimpleName();
     private SharedPreferences mobileIdPref;
     private String mobileId;
 
@@ -61,6 +57,7 @@ public class PostFragment extends Fragment {
     @BindView(R.id.et_reflect) EditText etReflect;
     @BindView(R.id.bt_submit_reflection) Button btSubmitReflection;
     @BindView(R.id.post_root) RelativeLayout root;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -93,98 +90,6 @@ public class PostFragment extends Fragment {
             }
         });
         return view;
-    }
-
-    /**
-     * Uses a {@link JSONObject} returned from the server to populate the
-     * given text views. This method also sets a listener for the
-     * FloatingActionButton to share the text of the post.
-     *
-     * @param baseJsonObject The {@link JSONObject} to extract the data from
-     */
-    private void populateViews(JSONObject baseJsonObject) {
-        try {
-            // Extract the values from the json object
-            String pointOne = baseJsonObject.getString(JsonConstants.POINT_ONE);
-            String pointTwo = baseJsonObject.getString(JsonConstants.POINT_TWO);
-            String pointThree = baseJsonObject.getString(JsonConstants.POINT_THREE);
-            String link = baseJsonObject.getString(JsonConstants.URL);
-            boolean isReflection = baseJsonObject.getBoolean(JsonConstants.REFLECT);
-            final String articleTitle = baseJsonObject.getString(JsonConstants.TITLE);
-            final String message = baseJsonObject.getString(JsonConstants.MESSAGE);
-
-            // Before we set the text views, we have to check if there
-            // is actually a bullet point to show in the JSONObject
-            if (!TextUtils.isEmpty(pointOne)) tvPointOne.setText(pointOne);
-            else tableRowOne.setVisibility(View.GONE);
-
-            if (!TextUtils.isEmpty(pointTwo)) tvPointTwo.setText(pointTwo);
-            else tableRowTwo.setVisibility(View.GONE);
-
-            if (!TextUtils.isEmpty(pointThree)) tvPointThree.setText(pointThree);
-            else tableRowThree.setVisibility(View.GONE);
-
-            tvReflectMessage.setText(message.trim());
-            // If there isn't a link to show, we don't want
-            // to waste space in the layout so we'll hide it
-            if (!TextUtils.isEmpty(link)) {
-                tvArticleLink.setText(link);
-                // Makes the article link clickable
-                tvArticleLink.setMovementMethod(LinkMovementMethod.getInstance());
-            } else {
-                readStudyHeader.setVisibility(View.GONE);
-                tvArticleLink.setVisibility(View.GONE);
-            }
-            // Makes sure to set the title of the action bar to
-            // the title of this post
-            getActivity().setTitle(articleTitle);
-            layoutContainer.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.INVISIBLE);
-
-            // The listener for the fab is set here so that a post can only
-            // be shared if it was loaded successfully
-            fabShare.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Now that we have the JSON data from the server, we can share the
-                    // title of the post along with the message when the fab is clicked
-                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                    sharingIntent.setType("text/plain");
-                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, articleTitle);
-                    sharingIntent.putExtra(Intent.EXTRA_TEXT, message);
-                    startActivity(Intent.createChooser(sharingIntent, "Share using"));
-                }
-            });
-            // We only want to show the views to submit a reflection
-            // if the page from the server is a reflection page
-            if (isReflection) {
-                etContainer.setVisibility(View.VISIBLE);
-                btSubmitReflection.setVisibility(View.VISIBLE);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Shows any error that may have occurred.
-     */
-    private void handleError(String error) {
-        Log.i(TAG, "handleError:... " + error);
-        progressBar.setVisibility(View.INVISIBLE);
-        switch (error) {
-            case NetworkUtils.RESPONSE_HBA00000: // Unknown error
-                Snackbar.make(root, getString(R.string.ERROR_HBA00000), Snackbar.LENGTH_LONG).show();
-                break;
-            case NetworkUtils.RESPONSE_HBA00001: // Unknown request
-            case NetworkUtils.RESPONSE_HBA00002: // Unable to generate mobile id
-            case NetworkUtils.RESPONSE_HBA00003: // Mobile id doesn't exist on server
-                break;
-            case NetworkUtils.RESPONSE_HBA00004: // Last page reached
-                tvError.setVisibility(View.VISIBLE);
-                tvError.setText(getString(R.string.ERROR_HBA00004));
-                break;
-        }
     }
 
     /**
@@ -228,15 +133,11 @@ public class PostFragment extends Fragment {
 
             @Override
             protected void onPostExecute(String result) {
-                try {
-                    // Convert the returned result to a JSONObject so we can
-                    // extract the data from it and populate views
-                    JSONObject baseJsonObject = new JSONObject(result);
-                    populateViews(baseJsonObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    handleError(result);
-                }
+               if (!result.contains("HBA")) {
+                   populateViews(Page.fromJson(result));
+               } else {
+                   handleError(result);
+               }
             }
         }.execute();
     }
@@ -275,5 +176,83 @@ public class PostFragment extends Fragment {
                 }
             }
         }.execute();
+    }
+
+    /**
+     * Uses a {@link Page} object returned from the server to populate the
+     * given text views. This method also sets a listener for the
+     * FloatingActionButton to share the text of the post.
+     *
+     * @param page The {@link Page} object to extract the data from
+     */
+    private void populateViews(final Page page) {
+        // Before we set the text views, we have to check if there
+        // is actually a bullet point to show
+        if (!TextUtils.isEmpty(page.getFirstBullet())) tvPointOne.setText(page.getFirstBullet());
+        else tableRowOne.setVisibility(View.GONE);
+
+        if (!TextUtils.isEmpty(page.getSecondBullet())) tvPointTwo.setText(page.getSecondBullet());
+        else tableRowTwo.setVisibility(View.GONE);
+
+        if (!TextUtils.isEmpty(page.getThirdBullet())) tvPointThree.setText(page.getThirdBullet());
+        else tableRowThree.setVisibility(View.GONE);
+
+        tvReflectMessage.setText(page.getMessage());
+        // If there isn't a link to show, we don't want
+        // to waste space in the layout so we'll hide it
+        if (!TextUtils.isEmpty(page.getStudyLink())) {
+            tvArticleLink.setText(page.getStudyLink());
+            // Makes the article link clickable
+            tvArticleLink.setMovementMethod(LinkMovementMethod.getInstance());
+        } else {
+            readStudyHeader.setVisibility(View.GONE);
+            tvArticleLink.setVisibility(View.GONE);
+        }
+        // Makes sure to set the title of the action bar to
+        // the title of this post
+        getActivity().setTitle(page.getTitle());
+        layoutContainer.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+
+        // The listener for the fab is set here so that a post can only
+        // be shared if it was loaded successfully
+        fabShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Now that we have the data from the server, we can share the
+                // title of the post along with the message when the fab is clicked
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, page.getTitle());
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, page.getMessage());
+                startActivity(Intent.createChooser(sharingIntent, "Share using"));
+            }
+        });
+        // We only want to show the views to submit a reflection
+        // if the page from the server is a reflection page
+        if (page.isReflect()) {
+            etContainer.setVisibility(View.VISIBLE);
+            btSubmitReflection.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Shows any error that may have occurred.
+     */
+    private void handleError(String error) {
+        progressBar.setVisibility(View.INVISIBLE);
+        switch (error) {
+            case NetworkUtils.RESPONSE_HBA00000: // Unknown error
+                Snackbar.make(root, getString(R.string.ERROR_HBA00000), Snackbar.LENGTH_LONG).show();
+                break;
+            case NetworkUtils.RESPONSE_HBA00001: // Unknown request
+            case NetworkUtils.RESPONSE_HBA00002: // Unable to generate mobile id
+            case NetworkUtils.RESPONSE_HBA00003: // Mobile id doesn't exist on server
+                break;
+            case NetworkUtils.RESPONSE_HBA00004: // Last page reached
+                tvError.setVisibility(View.VISIBLE);
+                tvError.setText(getString(R.string.ERROR_HBA00004));
+                break;
+        }
     }
 }
