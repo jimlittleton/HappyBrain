@@ -25,6 +25,9 @@ public class Page {
     @SerializedName("Message")
     private String message;
 
+    @SerializedName("Teaser")
+    private String teaser;
+
     @SerializedName("Reflect")
     private boolean isReflect;
 
@@ -33,6 +36,9 @@ public class Page {
 
     @SerializedName("Filename")
     private String imageUrl;
+
+    @SerializedName("PageURL")
+    private String pageURL;
 
     public String getTitle() {
         return title;
@@ -54,6 +60,10 @@ public class Page {
         return message.trim();
     }
 
+    public String getTeaser() {
+        return teaser.trim();
+    }
+
     public boolean isReflect() {
         return isReflect;
     }
@@ -63,7 +73,12 @@ public class Page {
     }
 
     public String getImageUrl() {
-        return String.format("https://%s/images/%s", NetworkUtils.BASE_SERVER_URL, imageUrl);
+        //return String.format("https://%s/images/%s", NetworkUtils.BASE_SERVER_URL, imageUrl);
+        return imageUrl;
+    }
+
+    public String getPageUrl() {
+        return pageURL;
     }
 
     public static Page fromJson(String json) {

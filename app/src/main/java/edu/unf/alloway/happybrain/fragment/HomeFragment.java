@@ -16,10 +16,12 @@ import edu.unf.alloway.happybrain.R;
 public class HomeFragment extends Fragment {
 
     View theView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         theView = inflater.inflate(R.layout.home_screen,container,false);
+
         return theView;
     }
 }

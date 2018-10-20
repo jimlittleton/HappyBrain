@@ -22,7 +22,7 @@ public final class NetworkUtils {
     /**
      * Server key used to make requests
      */
-    private static final String SERVER_SECRET_KEY = "ADD KEY HERE";
+    private static final String SERVER_SECRET_KEY = "UnFkFzLqOwNtXkS7KpFa2tTzSuFaUuNf";
     /**
      * The base URL for the Happy Brain website
      */

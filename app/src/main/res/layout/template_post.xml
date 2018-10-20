@@ -11,6 +11,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:scrollbars="none">
 
         <LinearLayout
@@ -121,10 +123,10 @@
                 style="@style/WebLink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:autoLink="web"
                 tools:text="This is a place holder link" />
 
@@ -135,8 +137,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:hint="@string/type_reflection_hint"
-                tools:visibility="visible"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <EditText
                     android:id="@+id/et_reflect"
@@ -147,15 +149,15 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                tools:visibility="visible"
-                android:visibility="gone"
                 android:id="@+id/bt_submit_reflection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/bt_submit_reflection"
-                android:textColor="#FFF" />
+                android:textColor="#FFF"
+                android:visibility="gone"
+                tools:visibility="visible" />
         </LinearLayout>
 
 

@@ -15,7 +15,9 @@
         When we are able to choose, we are generally happier with the decision. In our research, we
         found that autonomy – the desire to be self-directed -  was an important factor in determining
         how optimistic we felt. You can develop your sense of Autonomy by thinking about why you make the
-        choices you do so that you can stay connected with the reason behind your choices.
+        choices you do so that you can stay connected with the reason behind your choices.\n\n
+        Dr. Tracy Packiam Alloway \u0026 John Horton, MSC\n\n
+        http://tracyalloway.com
     </string>
 
     <string name="title_activity_happy_brain">Happy Brain</string>
@@ -51,4 +53,5 @@
     <string name="notif_content_text">Have you checked in today?</string>
     <string name="error_no_internet">No internet connection</string>
     <string name="snackbar_action_retry">RETRY</string>
+
 </resources>

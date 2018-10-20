@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -72,7 +73,7 @@ public class PostFragment extends Fragment {
         mobileId = mobileIdPref.getString(getString(R.string.pref_mobile_id), null);
         // The mobileId will be null if this is the first time the user
         // has opened this app. If it is, we'll have to get one from the server
-        if (mobileId == null) getMobileIdFromServer();
+        if (mobileId == null || mobileId == "") getMobileIdFromServer();
         else loadPageFromServer();
 
         layoutContainer.setVisibility(View.INVISIBLE);
@@ -217,6 +218,9 @@ public class PostFragment extends Fragment {
      */
     private void populateViews(final Page page) {
         Picasso.get().load(page.getImageUrl()).into(ivPageImage);
+
+        String linkText = String.format("<a href='%s'>Click Here to View the Study</a>", page.getStudyLink());
+
         // Before we set the text views, we have to check if there
         // is actually a bullet point to show
         if (!TextUtils.isEmpty(page.getFirstBullet())) tvPointOne.setText(page.getFirstBullet());
@@ -229,12 +233,24 @@ public class PostFragment extends Fragment {
         else tableRowThree.setVisibility(View.GONE);
 
         tvReflectMessage.setText(page.getMessage());
+
+
+
+
+
         // If there isn't a link to show, we don't want
         // to waste space in the layout so we'll hide it
         if (!TextUtils.isEmpty(page.getStudyLink())) {
-            tvArticleLink.setText(page.getStudyLink());
-            // Makes the article link clickable
+            //tvArticleLink.setText(page.getStudyLink());
+
+            tvArticleLink.setClickable(true);
             tvArticleLink.setMovementMethod(LinkMovementMethod.getInstance());
+            tvArticleLink.setAutoLinkMask(0);
+            tvArticleLink.setText(Html.fromHtml(linkText));
+
+
+            // Makes the article link clickable
+            //tvArticleLink.setMovementMethod(LinkMovementMethod.getInstance());
         } else {
             readStudyHeader.setVisibility(View.GONE);
             tvArticleLink.setVisibility(View.GONE);
@@ -255,7 +271,8 @@ public class PostFragment extends Fragment {
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, page.getTitle());
-                sharingIntent.putExtra(Intent.EXTRA_TEXT, page.getMessage());
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, page.getTeaser());
+                sharingIntent.putExtra(Intent.EXTRA_HTML_TEXT, String.format("<a href='%s'>Click Here to View the Page</a>", page.getPageUrl()));
                 startActivity(Intent.createChooser(sharingIntent, "Share using"));
             }
         });

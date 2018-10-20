@@ -10,9 +10,7 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
-
 import java.util.Calendar;
-
 import edu.unf.alloway.happybrain.MainActivity;
 import edu.unf.alloway.happybrain.R;
 
@@ -25,7 +23,7 @@ public class NotificationServiceUtils extends BroadcastReceiver {
     private static final String ACTION_SHOW_NOTIFICATION = "edu.unf.alloway.happybrain.NOTIFICATION";
     private static final int ALARM_INTENT_REQUEST_CODE = 500;
     private static final int INTERVAL = 86_400_000;  // Same as 24 hours
-    private static final int HOUR = 12;
+    private static final int HOUR = 8;
     private static final int MINUTE = 0;
 
     @Override
@@ -120,7 +118,7 @@ public class NotificationServiceUtils extends BroadcastReceiver {
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, HOUR);
         calendar.set(Calendar.MINUTE, MINUTE);
-        calendar.set(Calendar.AM_PM, Calendar.PM);
+        calendar.set(Calendar.AM_PM, Calendar.AM);
 
         // Set the pending intent that will trigger the broadcast to
         // show the notification when fired
