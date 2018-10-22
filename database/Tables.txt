@@ -1,0 +1,62 @@
+CREATE TABLE `Devices` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MobileID` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `DateCreated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `DateModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Active` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1
+
+CREATE TABLE `Groups` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `DateCreated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `DateModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `Active` tinyint(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+
+CREATE TABLE `PageAssignments` (
+  `DeviceID` int(11) NOT NULL,
+  `PageID` int(11) NOT NULL,
+  `Comment` text,
+  `DateAssigned` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `CommentDate` timestamp NULL DEFAULT NULL,
+  `Unread` tinyint(1) NOT NULL DEFAULT '1',
+  `Active` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`DeviceID`,`PageID`),
+  KEY `DeviceID` (`DeviceID`),
+  KEY `PageID` (`PageID`),
+  CONSTRAINT `PageAssignments_ibfk_1` FOREIGN KEY (`DeviceID`) REFERENCES `Devices` (`ID`),
+  CONSTRAINT `PageAssignments_ibfk_2` FOREIGN KEY (`PageID`) REFERENCES `Pages` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+CREATE TABLE `Pages` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `PageNum` int(10) unsigned NOT NULL,
+  `Title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Points` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Message` text COLLATE utf8_unicode_ci NOT NULL,
+  `Teaser` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Reflect` tinyint(1) NOT NULL DEFAULT '0',
+  `URL` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Filename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `GroupID` int(11) NOT NULL,
+  `ShareID` varchar(23) COLLATE utf8_unicode_ci NOT NULL,
+  `DateCreated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `DateModified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `Active` tinyint(1) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `fk_group_id` (`GroupID`),
+  CONSTRAINT `fk_group_id` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+
+CREATE TABLE `Users` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Username` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  `DisplayName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `DateCreated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Active` tinyint(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
